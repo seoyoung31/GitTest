@@ -17,5 +17,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         println("왜 안되냐 ㅋㅋㅋ")
+        println("test cccccc")
     }
 }
