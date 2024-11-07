@@ -1,0 +1,57 @@
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\n    alias(libs.plugins.android.application)\n    alias(libs.plugins.kotlin.android)\n}\n\nandroid {\n    namespace = \"com.lion.gittest\"\n    compileSdk = 34\n\n    defaultConfig {\n        applicationId = \"com.lion.gittest\"\n        minSdk = 24\n        targetSdk = 34\n        versionCode = 1\n        versionName = \"1.0\"\n\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\n    }\n\n    buildTypes {\n        release {\n            isMinifyEnabled = false\n            proguardFiles(\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\n                \"proguard-rules.pro\"\n            )\n        }\n    }\n    compileOptions {\n        sourceCompatibility = JavaVersion.VERSION_1_8\n        targetCompatibility = JavaVersion.VERSION_1_8\n    }\n    kotlinOptions {\n        jvmTarget = \"1.8\"\n    }\n}\n\ndependencies {\n\n    implementation(libs.androidx.core.ktx)\n    implementation(libs.androidx.appcompat)\n    implementation(libs.material)\n    implementation(libs.androidx.activity)\n    implementation(libs.androidx.constraintlayout)\n    testImplementation(libs.junit)\n    androidTestImplementation(libs.androidx.junit)\n    androidTestImplementation(libs.androidx.espresso.core)\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 1586d87b73a306dc7f601cf7dfe5a97f86cd8e0e)
++++ b/app/build.gradle.kts	(date 1730946932246)
+@@ -33,6 +33,9 @@
+     kotlinOptions {
+         jvmTarget = "1.8"
+     }
++    viewBinding {
++        enable = true
++    }
+ }
+ 
+ dependencies {
+Index: app/src/main/java/com/lion/gittest/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.lion.gittest\n\nimport android.os.Bundle\nimport androidx.activity.enableEdgeToEdge\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.core.view.ViewCompat\nimport androidx.core.view.WindowInsetsCompat\n\nclass MainActivity : AppCompatActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        enableEdgeToEdge()\n        setContentView(R.layout.activity_main)\n        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->\n            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())\n            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)\n            insets\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/lion/gittest/MainActivity.kt b/app/src/main/java/com/lion/gittest/MainActivity.kt
+--- a/app/src/main/java/com/lion/gittest/MainActivity.kt	(revision 1586d87b73a306dc7f601cf7dfe5a97f86cd8e0e)
++++ b/app/src/main/java/com/lion/gittest/MainActivity.kt	(date 1730947032535)
+@@ -5,16 +5,24 @@
+ import androidx.appcompat.app.AppCompatActivity
+ import androidx.core.view.ViewCompat
+ import androidx.core.view.WindowInsetsCompat
++import com.lion.gittest.databinding.ActivityMainBinding
+ 
+ class MainActivity : AppCompatActivity() {
++
++    lateinit var activityMainBinding: ActivityMainBinding
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+         enableEdgeToEdge()
+-        setContentView(R.layout.activity_main)
++
++        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
++        setContentView(activityMainBinding.root)
+         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+             insets
+         }
++
++        print("fdfdfasfdfasdfdsf")
+     }
+ }
+\ No newline at end of file
